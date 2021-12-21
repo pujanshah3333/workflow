@@ -6,15 +6,15 @@ on:
         required: true
         type: string
       aws-region:
-        required: false
-        type: string
         default: 'eu-central-1'
-      terraform-version:
         required: false
         type: string
+      terraform-version:
         default: '0.14.8'
+        required: false
+        type: string
     secrets:
-      KRAKEN_GITHUB_TOKEN:
+      submodule_token:
         required: true
 jobs:
   prepare_terraform:
@@ -26,12 +26,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.KRAKEN_GITHUB_TOKEN }}
+          token: ${{ secrets.submodule_token }}
           submodules: true
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: ${{ inputs.role-to-assume }}
-          aws-region: ${{ inputs.aws-region }}
+      # - uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     role-to-assume: ${{ inputs.role-to-assume }}
+      #     aws-region: ${{ inputs.aws-region }}
       - uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: ${{ env.terraform-version }}
