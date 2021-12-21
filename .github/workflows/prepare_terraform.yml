@@ -1,0 +1,37 @@
+name: Prepare terraform
+on:
+  workflow_call:
+    inputs:
+      role-to-assume:
+        required: true
+        type: string
+      aws-region:
+        required: false
+        type: string
+        default: 'eu-central-1'
+      terraform-version:
+        required: false
+        type: string
+        default: '0.14.8'
+    secrets:
+      KRAKEN_GITHUB_TOKEN:
+        required: true
+jobs:
+  prepare_terraform:
+    name: Prepare for terraform run
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.KRAKEN_GITHUB_TOKEN }}
+          submodules: true
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ inputs.role-to-assume }}
+          aws-region: ${{ inputs.aws-region }}
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.terraform-version }}
