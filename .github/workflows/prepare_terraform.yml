@@ -8,6 +8,9 @@ on:
       run:
         required: true
         type: string
+      environment:
+        required: false
+        type: string
       aws_region:
         default: 'eu-central-1'
         required: false
@@ -21,6 +24,7 @@ on:
         required: true
 jobs:
   prepare_terraform:
+    environment: ${{ inputs.environment }}
     name: Prepare for terraform run
     runs-on: ubuntu-latest
     permissions:
