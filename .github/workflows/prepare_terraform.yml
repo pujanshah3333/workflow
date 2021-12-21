@@ -2,14 +2,14 @@ name: Prepare terraform
 on:
   workflow_call:
     inputs:
-      role-to-assume:
+      role_to_assume:
         required: true
         type: string
-      aws-region:
+      aws_region:
         default: 'eu-central-1'
         required: false
         type: string
-      terraform-version:
+      terraform_version:
         default: '0.14.8'
         required: false
         type: string
@@ -30,8 +30,8 @@ jobs:
           submodules: true
       # - uses: aws-actions/configure-aws-credentials@v1
       #   with:
-      #     role-to-assume: ${{ inputs.role-to-assume }}
-      #     aws-region: ${{ inputs.aws-region }}
+      #     role-to-assume: ${{ inputs.role_to_assume }}
+      #     aws-region: ${{ inputs.aws_region }}
       - uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: ${{ env.terraform-version }}
+          terraform_version: ${{ inputs.terraform_version }}
