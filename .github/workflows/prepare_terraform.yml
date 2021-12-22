@@ -37,7 +37,9 @@ jobs:
         with:
           token: ${{ secrets.submodule_token }}
           submodules: true
+      - run: env
       - uses: aws-actions/configure-aws-credentials@v1
+        if: inputs.role_to_assume
         with:
           role-to-assume: arn:aws:iam::${{ secrets.account_id }}:role/${{ inputs.role_to_assume }}
           aws-region: ${{ inputs.aws_region }}
