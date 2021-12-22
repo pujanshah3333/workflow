@@ -37,7 +37,7 @@ jobs:
           submodules: true
       - uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ inputs.role_to_assume }}
+          role-to-assume: "arn:aws:iam::${{ secrets.format('{0}_account_id', inputs.environment ) }}:role/${{ inputs.role_to_assume }}"
           aws-region: ${{ inputs.aws_region }}
       - uses: hashicorp/setup-terraform@v1
         with:
