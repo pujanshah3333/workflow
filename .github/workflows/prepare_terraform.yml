@@ -22,6 +22,8 @@ on:
     secrets:
       submodule_token:
         required: true
+      account_id:
+        required: true
 jobs:
   prepare_terraform:
     environment: ${{ inputs.environment }}
@@ -37,7 +39,7 @@ jobs:
           submodules: true
       - uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ inputs.role_to_assume }}
+          role-to-assume: arn:aws:iam::${{ secrets.account_id }}:role/${{ inputs.role_to_assume }}
           aws-region: ${{ inputs.aws_region }}
       - uses: hashicorp/setup-terraform@v1
         with:
